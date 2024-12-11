@@ -139,7 +139,7 @@ const Password = () => {
       <td>
         <div className='flex gap-7'>
         <img onClick={()=>handleDelete(item)} className='h-7 w-7 cursor-pointer' src="../../public/bin.png" alt="Delete" />
-        <img onClick={()=>{handleEdit(item)}} className='h-7 w-7 cursor-pointer'src="../../public/editing.png" alt="Edit"/>
+        <img onClick={()=>handleEdit(item)} className='h-7 w-7 cursor-pointer'src="../../public/editing.png" alt="Edit"/>
         </div>
         
       </td>

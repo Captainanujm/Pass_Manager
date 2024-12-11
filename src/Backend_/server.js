@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 const mongoURI = process.env.Mongo_URI
 mongoose
-  .connect(mongoURI)
+  .connect(mongoURI);
   
 
 const passwordSchema = new mongoose.Schema({
