@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const mongoURI = process.env.Mongo_URI
+const mongoURI = process.env.MONGO_URI
 mongoose
   .connect(mongoURI);
   
@@ -31,12 +31,15 @@ app.get("/passwords", async (req, res) => {
 
 app.post("/passwords", async (req, res) => {
   const newPassword = new Password(req.body);
-  await newPassword.save();
-  res.status(201).send("Password added successfully");
+  const saved=await newPassword.save();
+  res.status(201).json(saved); 
 });
 
 app.delete("/passwords/:id", async (req, res) => {
   const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid ID" });
+  }
   await Password.findByIdAndDelete(id);
   res.send("Password deleted successfully");
 });

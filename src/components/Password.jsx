@@ -13,8 +13,8 @@ const Password = () => {
     }, []);
     function handleAdd(){
       axios.post("http://localhost:5000/passwords", data)
-      .then(() => {
-        setSavePassword([...savePassword, data]);
+      .then((response) => {
+        setSavePassword([...savePassword, response.data]);
         setData({ site: "", username: "", password: "" });
         toast.success("Password added successfully");
       })
@@ -31,6 +31,7 @@ const Password = () => {
       navigator.clipboard.writeText(item);
     }
     function handleDelete(itemToDelete) {
+      console.log("Deleting item:", itemToDelete);
       axios.delete(`http://localhost:5000/passwords/${itemToDelete._id}`)
       .then(() => {
         setSavePassword(savePassword.filter((pass) => pass._id !== itemToDelete._id));
