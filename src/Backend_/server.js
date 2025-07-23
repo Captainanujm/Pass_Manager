@@ -7,16 +7,17 @@ config();
 const app = express();
 
 
-app.use(cors({
-  origin: "https://passmanagerapp.netlify.app",  
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(cors());
 app.use(bodyParser.json());
 
 const mongoURI = process.env.MONGO_URI
 mongoose
-  .connect(mongoURI);
+  .connect(mongoURI).then(() => {
+    console.log("✅ Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("❌ Error connecting to MongoDB:", error);
+  });
   
 
 const passwordSchema = new mongoose.Schema({
@@ -54,8 +55,6 @@ app.put("/passwords/:id", async (req, res) => {
   await Password.findByIdAndUpdate(id, updatedData);
   res.send("Password updated successfully");
 });
-app.get("/", (req, res) => {
-  res.send("✅ Backend is live!");
-});
-const PORT = process.env.PORT || 5000;
+
+const PORT =  5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
