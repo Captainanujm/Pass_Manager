@@ -54,6 +54,8 @@ app.put("/passwords/:id", async (req, res) => {
   await Password.findByIdAndUpdate(id, updatedData);
   res.send("Password updated successfully");
 });
-
+app.get("/", (req, res) => {
+  res.send("✅ Backend is live!");
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
